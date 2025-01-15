@@ -8,15 +8,14 @@ SELECT DISTINCT country
 FROM company
 JOIN transaction
 ON (company.id = company_id)
-WHERE company_id IN (company.id)
+-- WHERE company_id IN (company.id) No es necesario teniendo el ON que iguala lo mismo
 ORDER BY country;
 
 -- Des de quants països es realitzen les compres.
 SELECT count(DISTINCT country) as NumPais 
 FROM company
 JOIN transaction
-ON (company.id = company_id)
-WHERE company_id IN (company.id);
+ON (company.id = company_id);
 
 -- Identifica la companyia amb la mitjana més gran de vendes. (Es refereix al valor de les ventes, no el nº)
 SELECT company_name as Nombre, round(AVG(amount), 2) as MediaVentas
@@ -47,6 +46,7 @@ WHERE id IN (SELECT company_id
 SELECT company_name
 FROM company
 WHERE id NOT IN (SELECT DISTINCT company_id FROM transaction);
+-- Se podría usar también (sería más óptimo) un EXISTS ()
 
 
 -- NIVELL 2
@@ -58,6 +58,7 @@ FROM transaction
 GROUP BY Date
 order by Total desc
 LIMIT 5;
+-- Podria usar date(timestamp) directamente en lugar de substring()
 
 
 -- Exercici 2
